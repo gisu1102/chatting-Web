@@ -1,0 +1,65 @@
+.chat-room-list {
+    padding: 20px;
+    box-sizing: border-box;
+    height: calc(100vh - 40px); /* 전체 높이에서 패딩 값을 뺀 높이로 설정합니다 */
+    overflow: auto; /* 내부 요소가 넘칠 때 스크롤바가 생기도록 */
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+}
+
+.input-group input {
+    width: calc(100% - 80px); /* 버튼을 제외한 너비 */
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.input-group .search-button {
+    width: 60px;
+    padding: 10px;
+    margin-left: 10px;
+    background-color: #ffcc00;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.no-result {
+    margin-top: 20px;
+}
+
+.no-result p {
+    margin: 0;
+    padding: 0;
+    color: #ff0000; /* 적당한 색상으로 수정 */
+}
+
+.no-result .create-button {
+    display: block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #ffcc00;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.chat-rooms {
+    margin-top: 20px;
+    padding: 0;
+    list-style: none;
+}
+
+.chat-rooms li {
+    cursor: pointer;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.chat-rooms li:hover {
+    background-color: #f0f0f0;
+}

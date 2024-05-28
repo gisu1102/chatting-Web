@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { register } from '../api';
+import { register } from '../api.js';
+import '../styles/Register.css';
 
 const Register = ({ onRegister }) => {
     const [username, setUsername] = useState('');
@@ -14,12 +15,12 @@ const Register = ({ onRegister }) => {
         } else {
             setError('');
             alert('회원가입 성공!');
-            onRegister(username);
+            onRegister();
         }
     };
 
     return (
-        <div className='register_form'>
+        <div className='auth-form'>
             <h3>회원가입</h3>
             <form onSubmit={handleSubmit}>
                 <input

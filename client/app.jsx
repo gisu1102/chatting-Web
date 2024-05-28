@@ -11,9 +11,8 @@ const ChatApp = () => {
 		setUser(username);
 	};
 
-	const handleRegister = (username) => {
+	const handleRegister = () => {
 		setIsRegistered(true);
-		// 회원가입 후 로그인 화면으로 이동
 	};
 
 	if (user) {

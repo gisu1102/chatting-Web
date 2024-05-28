@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { login } from '../api';
+import { login } from '../api.js';
+import '../styles/Login.css';
 
 const Login = ({ onLogin }) => {
     const [username, setUsername] = useState('');
@@ -19,7 +20,7 @@ const Login = ({ onLogin }) => {
     };
 
     return (
-        <div className='login_form'>
+        <div className='auth-form'>
             <h3>로그인</h3>
             <form onSubmit={handleSubmit}>
                 <input
