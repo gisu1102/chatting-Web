@@ -1,6 +1,8 @@
 import axios from 'axios';
+import io from 'socket.io-client';
 
 const API_BASE_URL = 'http://localhost:3000/api';
+const socket = io.connect();
 
 export const register = async (username, password) => {
     try {
@@ -36,4 +38,30 @@ export const createChatRoom = async (roomName) => {
     } catch (error) {
         return { error: error.response.data.message };
     }
+};
+
+// WebSocket 관련 API 로직
+export const joinRoom = (roomName, user, callback) => {
+    socket.emit('join', { room: roomName, user }, callback);
+};
+
+export const leaveRoom = (roomName, user) => {
+    socket.emit('leave', { room: roomName, user });
+};
+
+export const sendMessage = (roomName, user, text) => {
+    return new Promise((resolve) => {
+        const messageData = { room: roomName, user, text };
+        socket.emit('sendMessage', messageData, (response) => {
+            resolve(response);
+        });
+    });
+};
+
+export const onMessageReceived = (callback) => {
+    socket.on('message', callback);
+};
+
+export const offMessageReceived = (callback) => {
+    socket.off('message', callback);
 };

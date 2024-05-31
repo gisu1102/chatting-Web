@@ -1,38 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import io from 'socket.io-client';
+import { joinRoom, leaveRoom, sendMessage, onMessageReceived, offMessageReceived } from '../api';
 import '../styles/ChatRoom.css';
 
-const socket = io.connect();
-
-const ChatRoom = ({ roomName, user, messages: initialMessages }) => {
-    const [messages, setMessages] = useState(initialMessages || []);
+const ChatRoom = ({ roomName, user }) => {
+    const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState('');
 
     useEffect(() => {
-        socket.emit('join', { room: roomName, user }, (chatHistory) => {
+        joinRoom(roomName, user, (chatHistory) => {
             setMessages(chatHistory);
         });
 
-        const handleMessage = (message) => {
-            setMessages((prevMessages) => [...prevMessages, message]);
+        const handleMessage = (newMessage) => {
+            setMessages((prevMessages) => [...prevMessages, newMessage]);
         };
 
-        socket.off('message');  // 기존 리스너 제거
-        socket.on('message', handleMessage);  // 새로운 리스너 등록
+        onMessageReceived(handleMessage);
 
         return () => {
-            socket.emit('leave', { room: roomName, user });
-            socket.off('message', handleMessage);  // 메시지 리스너 해제
+            leaveRoom(roomName, user);
+            offMessageReceived(handleMessage);
         };
     }, [roomName, user]);
 
-    const sendMessage = (e) => {
+    const handleSendMessage = async (e) => {
         e.preventDefault();
         if (message) {
-            socket.emit('sendMessage', { room: roomName, user, text: message }, (response) => {
-                setMessages((prevMessages) => [...prevMessages, response]);
-            });
-            setMessage('');
+            await sendMessage(roomName, user, message);
+            setMessage(''); // 메시지를 비운다
         }
     };
 
@@ -48,7 +43,7 @@ const ChatRoom = ({ roomName, user, messages: initialMessages }) => {
                     </div>
                 ))}
             </div>
-            <form onSubmit={sendMessage}>
+            <form onSubmit={handleSendMessage}>
                 <input
                     type='text'
                     value={message}
