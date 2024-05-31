@@ -1,83 +1,71 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-}
-
-html, body, #root {
-    height: 100%;
-}
-
-.chat {
+.chat-app {
     display: flex;
     height: 100vh;
-    overflow: hidden;
 }
 
-.chat-content {
+.main-content {
     display: flex;
     flex: 1;
-    margin-left: 200px; /* 사이드바 너비 만큼 왼쪽 여백 추가 */
+    margin-left: 200px; /* 사이드바 공간 확보 */
 }
 
 .chat-room-list-container {
-    flex: 1;
+    width: 300px;
     border-right: 1px solid #ccc;
-    box-sizing: border-box;
-    min-width: 300px;
-    margin-right: 10px;
+    overflow-y: auto;
 }
 
 .chat-room-container {
-    flex: 3;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
     padding: 20px;
-    box-sizing: border-box;
-    overflow: hidden;
-    min-width: 600px;
-}
-
-.chat-room {
-    padding: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-    height: calc(100vh - 40px);
-    overflow: hidden;
-}
-
-.chat-room h2 {
-    margin-top: 0;
 }
 
 .messages {
-    border: 1px solid #ccc;
-    height: calc(100vh - 200px);
-    overflow-y: scroll;
-    margin-bottom: 20px;
-    padding: 10px;
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 1em;
+}
+
+.message-left,
+.message-right {
+    padding: 0.5em;
+    margin: 0.5em 0;
     border-radius: 5px;
+}
+
+.message-left {
+    background-color: #f1f1f1;
+    align-self: flex-start;
+}
+
+.message-right {
+    background-color: #dcf8c6;
+    align-self: flex-end;
 }
 
 .chat-room form {
     display: flex;
-    gap: 10px;
 }
 
 .chat-room input {
     flex: 1;
-    padding: 10px;
+    padding: 0.5em;
     border: 1px solid #ccc;
     border-radius: 5px;
+    margin-right: 0.5em;
 }
 
 .chat-room button {
-    padding: 10px 20px;
-    background-color: #ffcc00;
+    padding: 0.5em;
+    background-color: #28a745;
+    color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+}
+
+.chat-room button:hover {
+    background-color: #218838;
 }

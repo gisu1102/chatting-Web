@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import '../styles/Sidebar.css';
 
 const Sidebar = ({ onLogoClick, onUserInfoClick }) => {

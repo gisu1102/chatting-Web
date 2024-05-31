@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
-import Login from './components/Login.jsx';
-import Register from './components/Register.jsx';
-import Chat from './components/Chat.jsx';
+import ChatRoom from './components/ChatRoom';
+import ChatRoomList from './components/ChatRoomList';
+import Login from './components/Login';
+import Register from './components/Register';
+import Sidebar from './components/Sidebar';
+import './styles/Chat.css';
 
 const ChatApp = () => {
 	const [user, setUser] = useState(null);
-	const [isRegistered, setIsRegistered] = useState(false);
+	const [isRegistered, setIsRegistered] = useState(true);
+	const [selectedRoom, setSelectedRoom] = useState('');
+	const [messages, setMessages] = useState([]);
 
 	const handleLogin = (username) => {
 		setUser(username);
@@ -15,15 +20,33 @@ const ChatApp = () => {
 		setIsRegistered(true);
 	};
 
-	if (user) {
-		return <Chat user={user} />;
+	const handleSelectRoom = (room, messages) => {
+		setSelectedRoom(room);
+		setMessages(messages);
+	};
+
+	const handleShowUserInfo = () => {
+		alert(`로그인한 사용자: ${user}`);
+	};
+
+	const handleGoToHome = () => {
+		setSelectedRoom('');
+		setMessages([]);
+	};
+
+	if (!user) {
+		return isRegistered ? <Login onLogin={handleLogin} onRegisterClick={() => setIsRegistered(false)} /> : <Register onRegister={handleRegister} />;
 	}
 
-	if (!isRegistered) {
-		return <Register onRegister={handleRegister} />;
-	}
-
-	return <Login onLogin={handleLogin} />;
+	return (
+		<div className='chat-app'>
+			<Sidebar onLogoClick={handleGoToHome} onUserInfoClick={handleShowUserInfo} />
+			<div className='main-content'>
+				<ChatRoomList onSelectRoom={handleSelectRoom} />
+				{selectedRoom && <ChatRoom roomName={selectedRoom} user={user} messages={messages} />}
+			</div>
+		</div>
+	);
 };
 
 export default ChatApp;

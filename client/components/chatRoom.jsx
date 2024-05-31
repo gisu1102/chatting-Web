@@ -4,27 +4,34 @@ import '../styles/ChatRoom.css';
 
 const socket = io.connect();
 
-const ChatRoom = ({ roomName, user }) => {
-    const [messages, setMessages] = useState([]);
+const ChatRoom = ({ roomName, user, messages: initialMessages }) => {
+    const [messages, setMessages] = useState(initialMessages || []);
     const [message, setMessage] = useState('');
 
     useEffect(() => {
-        socket.emit('join', { room: roomName, user });
-
-        socket.on('message', (message) => {
-            setMessages((prevMessages) => [...prevMessages, message]);
+        socket.emit('join', { room: roomName, user }, (chatHistory) => {
+            setMessages(chatHistory);
         });
+
+        const handleMessage = (message) => {
+            setMessages((prevMessages) => [...prevMessages, message]);
+        };
+
+        socket.off('message');  // 기존 리스너 제거
+        socket.on('message', handleMessage);  // 새로운 리스너 등록
 
         return () => {
             socket.emit('leave', { room: roomName, user });
-            socket.off();
+            socket.off('message', handleMessage);  // 메시지 리스너 해제
         };
     }, [roomName, user]);
 
     const sendMessage = (e) => {
         e.preventDefault();
         if (message) {
-            socket.emit('sendMessage', { room: roomName, user, text: message });
+            socket.emit('sendMessage', { room: roomName, user, text: message }, (response) => {
+                setMessages((prevMessages) => [...prevMessages, response]);
+            });
             setMessage('');
         }
     };
@@ -34,8 +41,10 @@ const ChatRoom = ({ roomName, user }) => {
             <h2>{roomName}</h2>
             <div className='messages'>
                 {messages.map((msg, i) => (
-                    <div key={i}>
-                        <strong>{msg.user}</strong>: {msg.text}
+                    <div key={i} className={`message-container ${msg.username === user ? 'right' : 'left'}`}>
+                        <div className={`message ${msg.username === user ? 'message-right' : 'message-left'}`}>
+                            <strong>{msg.username}</strong>: {msg.message}
+                        </div>
                     </div>
                 ))}
             </div>

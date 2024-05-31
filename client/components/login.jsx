@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { login } from '../api.js';
 import '../styles/Login.css';
 
-const Login = ({ onLogin }) => {
+const Login = ({ onLogin, onRegisterClick }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -38,6 +38,7 @@ const Login = ({ onLogin }) => {
                 <button type='submit'>로그인</button>
             </form>
             {error && <p>{error}</p>}
+            <button onClick={onRegisterClick}>회원가입</button>
         </div>
     );
 };

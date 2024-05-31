@@ -1,31 +1,28 @@
-const path = require('path');
+const sqlite3 = require('sqlite3').verbose();
+const db = new sqlite3.Database('index.db');
 
-module.exports = {
-    entry: './client/index.jsx',
-    output: {
-        path: path.resolve(__dirname, 'public/js'),
-        filename: 'app.js'
-    },
-    module: {
-        rules: [
-            {
-                test: /\.jsx?$/,
-                exclude: /node_modules/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['@babel/preset-env', '@babel/preset-react']
-                    }
-                }
-            },
-            {
-                test: /\.css$/,
-                use: ['style-loader', 'css-loader']
-            }
-        ]
-    },
-    resolve: {
-        extensions: ['.js', '.jsx']
-    },
-    mode: 'development' // or 'production'
-};
+db.serialize(() => {
+    // Users 테이블 생성
+    db.run(`CREATE TABLE IF NOT EXISTS users (
+                                                 id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                                 username TEXT UNIQUE,
+                                                 password TEXT
+            )`);
+
+    // ChatRooms 테이블 생성
+    db.run(`CREATE TABLE IF NOT EXISTS chatRooms (
+                                                     id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                                     roomName TEXT UNIQUE
+            )`);
+
+    // Messages 테이블 생성
+    db.run(`CREATE TABLE IF NOT EXISTS messages (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    roomName TEXT,
+    username TEXT,
+    message TEXT,
+    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP
+  )`);
+});
+
+module.exports = db;
