@@ -13,6 +13,7 @@
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "socket.io": "^2.5.0",
+    "socket.io-client": "^2.5.0",
     "sqlite3": "^5.1.7"
   },
   "devDependencies": {
@@ -24,6 +25,7 @@
     "browserify": "^10.2.6",
     "css-loader": "^7.1.2",
     "esmify": "^2.1.1",
+    "file-loader": "^6.2.0",
     "style-loader": "^4.0.0",
     "webpack": "^5.91.0",
     "webpack-cli": "^5.1.4"

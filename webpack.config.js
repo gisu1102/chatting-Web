@@ -21,6 +21,19 @@ module.exports = {
             {
                 test: /\.css$/,
                 use: ['style-loader', 'css-loader']
+            },
+            {
+                test: /\.(png|jpe?g|gif|svg)$/, // 이미지 파일 로더 추가
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[name].[ext]',
+                            outputPath: 'images/',
+                            publicPath: '/js/images/' // publicPath를 outputPath에 맞게 설정
+                        }
+                    }
+                ]
             }
         ]
     },

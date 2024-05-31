@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { login } from '../api.js';
 import '../styles/Login.css';
-
+import '../styles/authBorder.css'; // 공통 테두리 스타일
+import logo from '/images/computer.png'; // 이미지 파일 경로
 const Login = ({ onLogin, onRegisterClick }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -20,25 +21,28 @@ const Login = ({ onLogin, onRegisterClick }) => {
     };
 
     return (
-        <div className='auth-form'>
-            <h3>로그인</h3>
-            <form onSubmit={handleSubmit}>
-                <input
-                    type='text'
-                    placeholder='아이디 입력'
-                    onChange={(e) => setUsername(e.target.value)}
-                    value={username}
-                />
-                <input
-                    type='password'
-                    placeholder='비밀번호 입력'
-                    onChange={(e) => setPassword(e.target.value)}
-                    value={password}
-                />
-                <button type='submit'>로그인</button>
-            </form>
-            {error && <p>{error}</p>}
-            <button onClick={onRegisterClick}>회원가입</button>
+        <div className='auth-container'>
+            <div className='auth-form border-box'>
+                <img src={logo} alt='logo' className='auth-form-logo' />
+                <h3>로그인</h3>
+                <form onSubmit={handleSubmit}>
+                    <input
+                        type='text'
+                        placeholder='아이디 입력'
+                        onChange={(e) => setUsername(e.target.value)}
+                        value={username}
+                    />
+                    <input
+                        type='password'
+                        placeholder='비밀번호 입력'
+                        onChange={(e) => setPassword(e.target.value)}
+                        value={password}
+                    />
+                    <button type='submit'>로그인</button>
+                </form>
+                {error && <p>{error}</p>}
+                <button onClick={onRegisterClick}>회원가입</button>
+            </div>
         </div>
     );
 };

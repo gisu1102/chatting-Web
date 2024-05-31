@@ -18,11 +18,15 @@
 .message-container {
     display: flex;
     width: 100%;
-    justify-content: flex-start;
+    align-items: center;
 }
 
 .message-container.right {
     justify-content: flex-end;
+}
+
+.message-container.left {
+    justify-content: flex-start;
 }
 
 .message {
@@ -31,6 +35,7 @@
     border-radius: 5px;
     max-width: 60%;
     display: inline-block;
+    position: relative;
 }
 
 .message-left {
@@ -41,6 +46,21 @@
 .message-right {
     background-color: #dcf8c6;
     text-align: right;
+}
+
+.timestamp {
+    font-size: 0.8em;
+    color: #888;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+}
+
+.timestamp.left {
+    margin-left: 0.5em;
+}
+
+.timestamp.right {
+    margin-right: 0.5em;
 }
 
 .chat-room form {

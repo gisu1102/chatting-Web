@@ -40,11 +40,13 @@ const ChatApp = () => {
 
 	return (
 		<div className='chat-app'>
-			<Sidebar onLogoClick={handleGoToHome} onUserInfoClick={handleShowUserInfo} />
+
 			<div className='main-content'>
+				<Sidebar onLogoClick={handleGoToHome} onUserInfoClick={handleShowUserInfo} />
 				<ChatRoomList onSelectRoom={handleSelectRoom} />
 				{selectedRoom && <ChatRoom roomName={selectedRoom} user={user} messages={messages} />}
 			</div>
+
 		</div>
 	);
 };
