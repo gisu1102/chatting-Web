@@ -37,11 +37,11 @@ const ChatRoom = ({ roomName, user }) => {
             <div className='messages'>
                 {messages.map((msg, i) => (
                     <div key={i} className={`message-container ${msg.username === user ? 'right' : 'left'}`}>
+                        <strong className='username'>{msg.username}</strong>
                         <div className={`message ${msg.username === user ? 'message-right' : 'message-left'}`}>
-                            <strong>{msg.username}</strong>
-                            <div>{msg.message}</div>
+                            {msg.message}
                         </div>
-                        <div className={`timestamp ${msg.username === user ? 'left' : 'right'}`}>
+                        <div className='timestamp'>
                             {new Date(msg.timestamp).toLocaleString('ko-KR', { dateStyle: 'short', timeStyle: 'medium' })}
                         </div>
                     </div>

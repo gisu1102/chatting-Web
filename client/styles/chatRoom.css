@@ -17,16 +17,17 @@
 
 .message-container {
     display: flex;
-    width: 100%;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 1em;
 }
 
 .message-container.right {
-    justify-content: flex-end;
+    align-items: flex-end;
 }
 
-.message-container.left {
-    justify-content: flex-start;
+.username {
+    font-weight: bold;
 }
 
 .message {
@@ -51,16 +52,7 @@
 .timestamp {
     font-size: 0.8em;
     color: #888;
-    margin-left: 0.5em;
-    margin-right: 0.5em;
-}
-
-.timestamp.left {
-    margin-left: 0.5em;
-}
-
-.timestamp.right {
-    margin-right: 0.5em;
+    margin-top: 0.5em;
 }
 
 .chat-room form {

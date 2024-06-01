@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { login } from '../api.js';
-import '../styles/Login.css';
-import '../styles/authBorder.css'; // 공통 테두리 스타일
-import logo from '/images/computer.png'; // 이미지 파일 경로
+import '../styles/login.css';
+import  '../styles/authBorder.css'
+import logo from '/public/images/computer.png'; // 이미지 파일 경로
 const Login = ({ onLogin, onRegisterClick }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -23,7 +23,7 @@ const Login = ({ onLogin, onRegisterClick }) => {
     return (
         <div className='auth-container'>
             <div className='auth-form border-box'>
-                <img src={logo} alt='logo' className='auth-form-logo' />
+                <img src={logo} alt='logo' className='login-form-logo' />
                 <h3>로그인</h3>
                 <form onSubmit={handleSubmit}>
                     <input

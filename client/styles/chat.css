@@ -6,7 +6,7 @@
 .main-content {
     display: flex;
     flex: 1;
-    margin-left: 200px; /* 사이드바 공간 확보 */
+    margin-left: 60px; /* 사이드바 공간 확보 */
 }
 
 .chat-room-list-container {

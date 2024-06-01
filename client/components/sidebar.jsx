@@ -5,10 +5,10 @@ const Sidebar = ({ onLogoClick, onUserInfoClick }) => {
     return (
         <div className="sidebar">
             <div className="sidebar-logo" onClick={onUserInfoClick}>
-                사용자 정보
+                <span role="img" aria-label="user" style={{ fontSize: '24px' }}>👤</span>
             </div>
             <div className="sidebar-logo" onClick={onLogoClick}>
-                채팅
+                <span role="img" aria-label="chat" style={{ fontSize: '24px' }}>💬</span>
             </div>
         </div>
     );

@@ -1,3 +1,8 @@
+
+/* 로그인
+ */
+
+
 /* 부모 컨테이너를 중앙에 배치 */
 .auth-container {
     display: flex;
@@ -5,7 +10,6 @@
     align-items: center;
     height: 100vh;
 }
-
 
 .auth-form {
     max-width: 400px;

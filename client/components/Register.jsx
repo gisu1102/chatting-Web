@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { register } from '../api.js';
-import '../styles/Register.css';
-import '../styles/authBorder.css'; // 공통 테두리 스타일
-import logo from '/images/computer.png'; // 이미지 파일 경로
+import '../styles/register.css';
+import  '../styles/authBorder.css'
+import logo from '/public/images/blacktiger.png'; // 이미지 파일 경로
 
 const Register = ({ onRegister }) => {
     const [username, setUsername] = useState('');

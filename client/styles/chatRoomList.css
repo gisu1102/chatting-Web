@@ -6,25 +6,33 @@
     width: 300px;
 }
 
-.chat-room-list input {
+.search-create-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1em;
+}
+
+.search-create-container input {
+    flex: 1;
     padding: 0.5em;
-    margin-bottom: 0.5em;
+    margin-right: 0.5em; /* 인풋 박스와 버튼 사이의 여백 */
     border: 1px solid #ccc;
     border-radius: 5px;
 }
 
-.chat-room-list button {
+.search-create-container button {
     padding: 0.5em;
-
-    margin-bottom: 0.5em;
     background-color: #007bff;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-.chat-room-list button:hover {
+.search-create-container button:hover {
     background-color: #0056b3;
 }
 
@@ -37,8 +45,42 @@
     padding: 0.5em;
     border-bottom: 1px solid #ccc;
     cursor: pointer;
+    display: flex;
+    align-items: center;
 }
 
 .chat-room-list li:hover {
     background-color: #f1f1f1;
+}
+
+.chat-room-item {
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    margin-right: 10px;
+}
+
+.chat-room-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.room-name {
+    font-weight: bold;
+    font-size: 1em;
+}
+
+.recent-message {
+    font-size: 0.9em;
+    color: #666;
+}
+
+.error-message {
+    color: red;
+}
+
+.room-not-found {
+    margin-top: 1em;
 }

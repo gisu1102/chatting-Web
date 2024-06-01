@@ -17,7 +17,13 @@ const ChatRoomList = ({ onSelectRoom }) => {
         } else {
             setError('');
             setRoomNotFound(false);
-            setChatRooms([response]); // 목록에 검색된 채팅방 하나만 유지
+
+            // 최근 메시지를 포함하도록 response를 업데이트
+            const recentMessage = response.messages && response.messages.length > 0
+                ? response.messages[response.messages.length - 1].message
+                : '최근 메시지가 없습니다.';
+
+            setChatRooms([{ ...response, recentMessage }]); // 목록에 검색된 채팅방 하나만 유지
         }
     };
 
@@ -28,7 +34,7 @@ const ChatRoomList = ({ onSelectRoom }) => {
         } else {
             setError('');
             setRoomNotFound(false);
-            setChatRooms([{ roomName }]); // 목록에 생성된 채팅방 하나만 유지
+            setChatRooms([{ roomName, recentMessage: '채팅방이 생성되었습니다.' }]); // 목록에 생성된 채팅방 하나만 유지
         }
     };
 
@@ -40,7 +46,9 @@ const ChatRoomList = ({ onSelectRoom }) => {
                     onChange={(e) => setRoomName(e.target.value)}
                     value={roomName}
                 />
-                <button onClick={handleSearch}>채팅방 검색</button>
+                <button onClick={handleSearch}>
+                    🔍︎
+                </button>
             </div>
             {error && <p className="error-message">{error}</p>}
             {roomNotFound && (
@@ -52,7 +60,13 @@ const ChatRoomList = ({ onSelectRoom }) => {
             <ul>
                 {chatRooms.map((room, index) => (
                     <li key={index} onClick={() => onSelectRoom(room.roomName)}>
-                        {room.roomName}
+                        <div className='chat-room-item'>
+                            <span className='icon'>🏠</span>
+                            <div className='chat-room-info'>
+                                <div className='room-name'>{room.roomName}</div>
+                                <div className='recent-message'>{room.recentMessage}</div>
+                            </div>
+                        </div>
                     </li>
                 ))}
             </ul>
