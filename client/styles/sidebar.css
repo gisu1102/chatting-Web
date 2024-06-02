@@ -1,13 +1,4 @@
-.sidebar {
-    width: 60px; /* 사이드바의 전체 너비를 줄임 */
-    background-color: #f1f1f1;
-    height: 100%; /* chat-body의 전체 높이를 따르도록 수정 */
-    position: relative; /* chat-body 내에서 위치하도록 수정 */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 20px;
-}
+
 
 .sidebar-logo {
     width: 30px; /* 아이템의 너비를 로고 크기에 맞게 조정 */

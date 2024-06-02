@@ -1,8 +1,19 @@
-
+.chat-header {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: #6498ea;
+    border-bottom: 1px solid #ccc;
+    border-radius: 20px 20px 20px 20px; /* 둥근 모서리를 추가! */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+    z-index: 1;
+    margin: 10px 10px;
+}
 
 .logo {
-    width: 40px;
-    height: 40px;
+    width: 130px;
+    height: 60px;
     margin-right: 10px;
 }
 
