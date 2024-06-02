@@ -3,16 +3,28 @@
     flex-direction: column;
     flex: 1;
     padding: 1em;
+    background-color: #fff;
+    border: 1px solid #ccc; /* 전체 채팅방에 경계선 추가 */
+    border-radius: 5px; /* 경계선에 둥근 모서리 추가 */
 }
 
 .chat-room h2 {
     text-align: center;
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    color: #333;
+    border-bottom: 1px solid #ccc; /* 헤더에 경계선 추가 */
+    padding-bottom: 10px; /* 헤더 경계선과 텍스트 사이에 여백 추가 */
 }
 
 .messages {
     flex: 1;
     overflow-y: auto;
     margin-bottom: 1em;
+    padding-right: 10px; /* Prevents content from being hidden behind the scrollbar */
+    border: 1px solid #ccc; /* 메시지 영역에 경계선 추가 */
+    border-radius: 5px; /* 메시지 영역에 둥근 모서리 추가 */
+    padding: 10px; /* 메시지 영역 내부 패딩 추가 */
 }
 
 .message-container {
@@ -28,15 +40,17 @@
 
 .username {
     font-weight: bold;
+    margin-bottom: 0.2em;
 }
 
 .message {
-    padding: 0.5em;
+    padding: 0.5em 1em;
     margin: 0.5em 0;
     border-radius: 5px;
-    max-width: 60%;
+    max-width: 70%;
     display: inline-block;
-    position: relative;
+    word-wrap: break-word;
+    border: 1px solid #ccc; /* 메시지 각각에 경계선 추가 */
 }
 
 .message-left {
@@ -57,6 +71,8 @@
 
 .chat-room form {
     display: flex;
+    border-top: 1px solid #ccc; /* 입력 폼 상단에 경계선 추가 */
+    padding-top: 10px;
 }
 
 .chat-room input {
@@ -68,7 +84,7 @@
 }
 
 .chat-room button {
-    padding: 0.5em;
+    padding: 0.5em 1em;
     background-color: #28a745;
     color: white;
     border: none;
