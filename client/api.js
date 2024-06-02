@@ -2,7 +2,7 @@ import axios from 'axios';
 import io from 'socket.io-client';
 
 const API_BASE_URL = 'http://localhost:3000/api';
-const socket = io.connect();
+export const socket = io.connect();
 
 export const register = async (username, password) => {
     try {
@@ -34,6 +34,15 @@ export const searchChatRoom = async (roomName) => {
 export const createChatRoom = async (roomName) => {
     try {
         const response = await axios.post(`${API_BASE_URL}/chatrooms`, { roomName });
+        return response.data;
+    } catch (error) {
+        return { error: error.response.data.message };
+    }
+};
+
+export const getAllChatRooms = async () => {
+    try {
+        const response = await axios.get(`${API_BASE_URL}/chatrooms`);
         return response.data;
     } catch (error) {
         return { error: error.response.data.message };

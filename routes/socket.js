@@ -9,7 +9,7 @@ module.exports = (io) => {
     socket.on('register', (data, callback) => {
       const { username, password } = data;
       const stmt = db.prepare(`INSERT INTO users (username, password) VALUES (?, ?)`);
-      stmt.run(username, password, function(err) {
+      stmt.run(username, password, function (err) {
         if (err) {
           console.error('Error registering user:', err.message);
           return callback({ error: 'Username already exists' });
@@ -49,7 +49,7 @@ module.exports = (io) => {
             console.error('Error retrieving messages:', err.message);
             return callback({ error: 'Could not retrieve messages' });
           }
-          callback({ room: roomName, messages: rows });
+          callback({ room: row, messages: rows });
         });
       });
     });
@@ -57,11 +57,13 @@ module.exports = (io) => {
     // 채팅방 생성
     socket.on('createChatRoom', (roomName, callback) => {
       const stmt = db.prepare(`INSERT INTO chatRooms (roomName) VALUES (?)`);
-      stmt.run(roomName, function(err) {
+      stmt.run(roomName, function (err) {
         if (err) {
           console.error('Error creating chat room:', err.message);
           return callback({ error: 'Chat room already exists' });
         }
+        // 새 채팅방 생성 시 모든 클라이언트에게 알림
+        io.emit('chatRoomCreated', { roomName });
         callback({ message: 'Chat room created successfully' });
       });
       stmt.finalize();
@@ -77,12 +79,14 @@ module.exports = (io) => {
         }
         callback(rows);
       });
+      // 채팅방 참여 시 모든 클라이언트에게 알림
+      io.emit('chatRoomJoined', { roomName: room, user });
     });
 
     // 메시지 전송
     socket.on('sendMessage', ({ room, user, text }, callback) => {
       const stmt = db.prepare(`INSERT INTO messages (roomName, username, message) VALUES (?, ?, ?)`);
-      stmt.run(room, user, text, function(err) {
+      stmt.run(room, user, text, function (err) {
         if (err) {
           console.error('Error sending message:', err.message);
           return callback({ error: 'Could not send message' });

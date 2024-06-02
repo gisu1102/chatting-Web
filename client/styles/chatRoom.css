@@ -3,9 +3,10 @@
     flex-direction: column;
     flex: 1;
     padding: 1em;
-    background-color: #fff;
+    background-color: #dce7fc;
     border: 1px solid #ccc; /* 전체 채팅방에 경계선 추가 */
     border-radius: 5px; /* 경계선에 둥근 모서리 추가 */
+    overflow-y: auto; /* Enable scrolling for the chat room */
 }
 
 .chat-room h2 {
@@ -19,12 +20,13 @@
 
 .messages {
     flex: 1;
-    overflow-y: auto;
+    overflow-y: auto; /* Enable scrolling for the messages */
     margin-bottom: 1em;
     padding-right: 10px; /* Prevents content from being hidden behind the scrollbar */
     border: 1px solid #ccc; /* 메시지 영역에 경계선 추가 */
     border-radius: 5px; /* 메시지 영역에 둥근 모서리 추가 */
     padding: 10px; /* 메시지 영역 내부 패딩 추가 */
+    background-color: #ecf2fa;
 }
 
 .message-container {
@@ -59,7 +61,7 @@
 }
 
 .message-right {
-    background-color: #dcf8c6;
+    background-color: #bbc6ff;
     text-align: right;
 }
 
@@ -73,6 +75,7 @@
     display: flex;
     border-top: 1px solid #ccc; /* 입력 폼 상단에 경계선 추가 */
     padding-top: 10px;
+    margin-top: auto; /* 폼을 화면의 맨 아래로 배치 */
 }
 
 .chat-room input {
@@ -85,7 +88,7 @@
 
 .chat-room button {
     padding: 0.5em 1em;
-    background-color: #28a745;
+    background-color: #86b5f8;
     color: white;
     border: none;
     border-radius: 5px;
@@ -93,5 +96,5 @@
 }
 
 .chat-room button:hover {
-    background-color: #218838;
+    background-color: #6498ea;
 }

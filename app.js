@@ -1,6 +1,7 @@
 const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
+const path = require('path');
 const db = require('./db'); // DB 모듈 추가
 
 const app = express();
@@ -10,7 +11,9 @@ const io = socketIo(server);
 const socketHandler = require('./routes/socket');
 socketHandler(io); // 함수로 호출하여 io 객체를 전달
 
-app.use(express.static(__dirname + '/public'));
+// 정적 파일 서빙 설정
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.use(express.json()); // JSON 파싱 미들웨어 추가
 
 app.set('port', 3000);
@@ -42,11 +45,27 @@ app.post('/api/login', (req, res) => {
 // 채팅방 검색 엔드포인트
 app.get('/api/chatrooms/:roomName', (req, res) => {
     const { roomName } = req.params;
-    db.get(`SELECT * FROM chatRooms WHERE roomName = ?`, [roomName], (err, row) => {
-        if (err || !row) {
+    db.get(`SELECT * FROM chatRooms WHERE roomName = ?`, [roomName], (err, room) => {
+        if (err || !room) {
             return res.status(404).json({ message: 'Chat room not found' });
         }
-        res.status(200).json(row);
+        db.all(`SELECT * FROM messages WHERE roomName = ? ORDER BY timestamp ASC`, [roomName], (err, messages) => {
+            if (err) {
+                return res.status(500).json({ message: 'Error retrieving messages' });
+            }
+            const recentMessage = messages.length > 0 ? messages[messages.length - 1].message : '최근 메시지가 없습니다.';
+            res.status(200).json({ room, messages, recentMessage });
+        });
+    });
+});
+
+// 채팅방 목록 가져오기 엔드포인트 추가
+app.get('/api/chatrooms', (req, res) => {
+    db.all(`SELECT * FROM chatRooms`, (err, rows) => {
+        if (err) {
+            return res.status(500).json({ message: 'Error retrieving chat rooms' });
+        }
+        res.status(200).json(rows);
     });
 });
 

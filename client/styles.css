@@ -1,21 +1,5 @@
 body {
     font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+    background-color: #e7efff;
 }
 
-button {
-    cursor: pointer;
-}
-
-input {
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    padding: 0.5em;
-}
-
-button {
-    border-radius: 5px;
-    border: none;
-    padding: 0.5em 1em;
-}

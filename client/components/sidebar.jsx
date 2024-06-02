@@ -10,9 +10,6 @@ const Sidebar = ({ onLogoClick, onUserInfoClick , onParticipantsClick}) => {
             <div className="sidebar-logo" onClick={onLogoClick}>
                 <span role="img" aria-label="chat" style={{fontSize: '24px'}}>💬</span>
             </div>
-            <div className="sidebar-logo" onClick={onParticipantsClick}>
-                <span role="img" aria-label="chat" style={{fontSize: '24px'}}>👥</span>
-            </div>
         </div>
     );
 };

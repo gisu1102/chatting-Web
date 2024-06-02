@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import ChatRoomList from './ChatRoomList.jsx';
 import ChatRoom from './ChatRoom.jsx';
 import Sidebar from './Sidebar.jsx';
+import TopBar from './TopBar.jsx';
 import '../styles/Chat.css';
-import Header from "./header";
 
 const Chat = ({ user }) => {
     const [selectedRoom, setSelectedRoom] = useState(null);
@@ -22,8 +22,8 @@ const Chat = ({ user }) => {
 
     return (
         <div className='chat'>
-            <div className='chat-header-container'>
-                <Header />
+            <div className='chat-header'>
+                <TopBar />
             </div>
             <div className='chat-body'>
                 <div className='chat-sidebar'>

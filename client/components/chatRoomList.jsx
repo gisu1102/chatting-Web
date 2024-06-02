@@ -1,12 +1,45 @@
-import React, { useState } from 'react';
-import { searchChatRoom, createChatRoom } from '../api'; // API 호출 함수 import
+import React, { useState, useEffect } from 'react';
+import { searchChatRoom, createChatRoom, getAllChatRooms, socket } from '../api'; // API 호출 함수 import
 import '../styles/ChatRoomList.css';
 
-const ChatRoomList = ({ onSelectRoom }) => {
+const ChatRoomList = ({ onSelectRoom, reset }) => {
     const [roomName, setRoomName] = useState('');
     const [chatRooms, setChatRooms] = useState([]);
+    const [allChatRooms, setAllChatRooms] = useState([]);
     const [error, setError] = useState('');
     const [roomNotFound, setRoomNotFound] = useState(false);
+
+    useEffect(() => {
+        fetchAllChatRooms();
+
+        // 소켓 이벤트 수신하여 채팅방 목록 업데이트
+        socket.on('chatRoomCreated', () => {
+            fetchAllChatRooms();
+        });
+
+        socket.on('chatRoomJoined', () => {
+            fetchAllChatRooms();
+        });
+
+        // 컴포넌트 언마운트 시 이벤트 리스너 제거
+        return () => {
+            socket.off('chatRoomCreated');
+            socket.off('chatRoomJoined');
+        };
+    }, []);
+
+    useEffect(() => {
+        if (reset) {
+            handleReset();
+        }
+    }, [reset]);
+
+    const fetchAllChatRooms = async () => {
+        const response = await getAllChatRooms();
+        if (!response.error) {
+            setAllChatRooms(response);
+        }
+    };
 
     const handleSearch = async () => {
         const response = await searchChatRoom(roomName);
@@ -23,7 +56,7 @@ const ChatRoomList = ({ onSelectRoom }) => {
                 ? response.messages[response.messages.length - 1].message
                 : '최근 메시지가 없습니다.';
 
-            setChatRooms([{ ...response, recentMessage }]); // 목록에 검색된 채팅방 하나만 유지
+            setChatRooms([{ ...response.room, recentMessage }]); // 목록에 검색된 채팅방 하나만 유지
         }
     };
 
@@ -35,7 +68,18 @@ const ChatRoomList = ({ onSelectRoom }) => {
             setError('');
             setRoomNotFound(false);
             setChatRooms([{ roomName, recentMessage: '채팅방이 생성되었습니다.' }]); // 목록에 생성된 채팅방 하나만 유지
+
+            // 참여 중인 채팅방 목록 최신화
+            fetchAllChatRooms();
         }
+    };
+
+    const handleReset = () => {
+        setRoomName('');
+        setChatRooms([]);
+        setError('');
+        setRoomNotFound(false);
+        fetchAllChatRooms();
     };
 
     return (
@@ -57,6 +101,7 @@ const ChatRoomList = ({ onSelectRoom }) => {
                     <button onClick={handleCreate}>채팅방을 생성하시겠습니까?</button>
                 </div>
             )}
+            <h2>검색한 채팅방</h2>
             <ul>
                 {chatRooms.map((room, index) => (
                     <li key={index} onClick={() => onSelectRoom(room.roomName)}>
@@ -70,6 +115,21 @@ const ChatRoomList = ({ onSelectRoom }) => {
                     </li>
                 ))}
             </ul>
+            <div className="all-chat-rooms">
+                <h2>참여 중인 채팅방</h2>
+                <ul>
+                    {allChatRooms.map((room, index) => (
+                        <li key={index} onClick={() => onSelectRoom(room.roomName)}>
+                            <div className='chat-room-item'>
+                                <span className='icon'>🏠</span>
+                                <div className='chat-room-info'>
+                                    <div className='room-name'>{room.roomName}</div>
+                                </div>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+            </div>
         </div>
     );
 };
