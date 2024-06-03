@@ -116,7 +116,7 @@ const ChatRoomList = ({ onSelectRoom, reset }) => {
                 ))}
             </ul>
             <div className="all-chat-rooms">
-                <h2>참여 중인 채팅방</h2>
+                <h2>생성된 채팅방 목록</h2>
                 <ul>
                     {allChatRooms.map((room, index) => (
                         <li key={index} onClick={() => onSelectRoom(room.roomName)}>
