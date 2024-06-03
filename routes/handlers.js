@@ -1,5 +1,6 @@
 /*
 socket event handlers -> 여기서 socket event 처리
+app.js(server) db 처리
  */
 
 const db = require('../db');
