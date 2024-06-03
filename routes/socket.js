@@ -12,6 +12,7 @@ module.exports = (io) => {
           return callback(err);
         }
         callback(rows);
+        io.emit('chatRoomJoined', { roomName: room });
       });
     });
 
@@ -24,6 +25,7 @@ module.exports = (io) => {
         callback(message);
       });
     });
+
 
     socket.on('disconnect', () => {
       console.log('User disconnected');

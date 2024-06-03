@@ -1,6 +1,6 @@
 /*
 socket event handlers -> 여기서 socket event 처리
-app.js(server) db 처리
+app.js(server) db 처리 query문 여기다
  */
 
 const db = require('../db');

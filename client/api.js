@@ -6,8 +6,7 @@ export const socket = io.connect();
 
 export const register = async (username, password) => {
     try {
-        const response =
-            await axios.post(`${API_BASE_URL}/register`, { username, password });
+        const response = await axios.post(`${API_BASE_URL}/register`, { username, password });
         return response.data;
     } catch (error) {
         return { error: error.response.data.message };
@@ -16,8 +15,7 @@ export const register = async (username, password) => {
 
 export const login = async (username, password) => {
     try {
-        const response =
-            await axios.post(`${API_BASE_URL}/login`, { username, password });
+        const response = await axios.post(`${API_BASE_URL}/login`, { username, password });
         return response.data;
     } catch (error) {
         return { error: error.response.data.message };
@@ -69,6 +67,7 @@ export const sendMessage = (roomName, user, text) => {
     });
 };
 
+// 클라이언트 측에서 수신되는 메세지 처리 - socket listener 등록
 export const onMessageReceived = (callback) => {
     socket.on('message', callback);
 };

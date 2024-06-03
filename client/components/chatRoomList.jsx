@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { searchChatRoom, createChatRoom, getAllChatRooms, onChatRoomCreated, onChatRoomJoined, offChatRoomCreated, offChatRoomJoined } from '../api';
+import { searchChatRoom, createChatRoom, getAllChatRooms, onMessageReceived, onChatRoomCreated, onChatRoomJoined, offMessageReceived, offChatRoomCreated, offChatRoomJoined } from '../api';
 import '../styles/ChatRoomList.css';
 
 const ChatRoomList = ({ onSelectRoom, reset }) => {
@@ -16,10 +16,14 @@ const ChatRoomList = ({ onSelectRoom, reset }) => {
         onChatRoomCreated(fetchAllChatRooms);
         onChatRoomJoined(fetchAllChatRooms);
 
+        // 메시지 수신 시 검색한 채팅방의 최근 메시지 업데이트
+        onMessageReceived(handleMessageReceived);
+
         // 컴포넌트 언마운트 시 이벤트 리스너 제거
         return () => {
             offChatRoomCreated(fetchAllChatRooms);
             offChatRoomJoined(fetchAllChatRooms);
+            offMessageReceived(handleMessageReceived);
         };
     }, []);
 
@@ -67,6 +71,17 @@ const ChatRoomList = ({ onSelectRoom, reset }) => {
             // 참여 중인 채팅방 목록 최신화
             fetchAllChatRooms();
         }
+    };
+
+    const handleMessageReceived = (message) => {
+        setChatRooms((prevChatRooms) => {
+            return prevChatRooms.map((room) => {
+                if (room.roomName === message.roomName) {
+                    return { ...room, recentMessage: message.message };
+                }
+                return room;
+            });
+        });
     };
 
     const handleReset = () => {
