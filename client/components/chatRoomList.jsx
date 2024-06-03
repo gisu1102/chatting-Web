@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { searchChatRoom, createChatRoom, getAllChatRooms, socket } from '../api'; // API 호출 함수 import
+import { searchChatRoom, createChatRoom, getAllChatRooms, onChatRoomCreated, onChatRoomJoined, offChatRoomCreated, offChatRoomJoined } from '../api';
 import '../styles/ChatRoomList.css';
 
 const ChatRoomList = ({ onSelectRoom, reset }) => {
@@ -13,18 +13,13 @@ const ChatRoomList = ({ onSelectRoom, reset }) => {
         fetchAllChatRooms();
 
         // 소켓 이벤트 수신하여 채팅방 목록 업데이트
-        socket.on('chatRoomCreated', () => {
-            fetchAllChatRooms();
-        });
-
-        socket.on('chatRoomJoined', () => {
-            fetchAllChatRooms();
-        });
+        onChatRoomCreated(fetchAllChatRooms);
+        onChatRoomJoined(fetchAllChatRooms);
 
         // 컴포넌트 언마운트 시 이벤트 리스너 제거
         return () => {
-            socket.off('chatRoomCreated');
-            socket.off('chatRoomJoined');
+            offChatRoomCreated(fetchAllChatRooms);
+            offChatRoomJoined(fetchAllChatRooms);
         };
     }, []);
 

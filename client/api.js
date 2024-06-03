@@ -6,7 +6,8 @@ export const socket = io.connect();
 
 export const register = async (username, password) => {
     try {
-        const response = await axios.post(`${API_BASE_URL}/register`, { username, password });
+        const response =
+            await axios.post(`${API_BASE_URL}/register`, { username, password });
         return response.data;
     } catch (error) {
         return { error: error.response.data.message };
@@ -15,7 +16,8 @@ export const register = async (username, password) => {
 
 export const login = async (username, password) => {
     try {
-        const response = await axios.post(`${API_BASE_URL}/login`, { username, password });
+        const response =
+            await axios.post(`${API_BASE_URL}/login`, { username, password });
         return response.data;
     } catch (error) {
         return { error: error.response.data.message };
@@ -73,4 +75,20 @@ export const onMessageReceived = (callback) => {
 
 export const offMessageReceived = (callback) => {
     socket.off('message', callback);
+};
+
+export const onChatRoomCreated = (callback) => {
+    socket.on('chatRoomCreated', callback);
+};
+
+export const offChatRoomCreated = (callback) => {
+    socket.off('chatRoomCreated', callback);
+};
+
+export const onChatRoomJoined = (callback) => {
+    socket.on('chatRoomJoined', callback);
+};
+
+export const offChatRoomJoined = (callback) => {
+    socket.off('chatRoomJoined', callback);
 };
